@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Moment profit</title>
+    <script>
+        const step = 0.00000001;
+        const commision = 0.001;
+        const payout = 1 - commision;
+
+        function update() {
+            let ask = parseFloat(gebi("ask").value);
+            let bid = parseFloat(gebi("bid").value);
+            let sum = parseFloat(gebi("sum").value);
+            let askNeed = ask - step;
+            let bidNeed = bid + step;
+            let result = sum * askNeed / bidNeed * payout;
+            let profit = result - sum;
+            console.log(ask, bid, sum);
+            gebi("askNeed").value = askNeed.toFixed(8);
+            gebi("bidNeed").value = bidNeed.toFixed(8);
+            gebi("result").value = result.toFixed(8);
+            gebi("profit").value = profit.toFixed(8);
+        }
+
+        function gebi(id) {
+            return document.getElementById(id);
+        }
+
+        window.addEventListener("DOMContentLoaded", update, true);
+    </script>
+</head>
+<body>
+<label for="sum">Сумма сделки:</label>
+<input id="sum" type="number" value="50" onchange="update()"/>
+<br>
+<label for="ask">Цена продажи в стакане:</label>
+<input id="ask" type="number" value="0.00001050" step="0.00000001" onchange="update()"/>
+<br>
+<label for="askNeed">Цена продажи твоя:</label>
+<input id="askNeed" disabled/>
+<br>
+<label for="bid">Цена покупки в стакане:</label>
+<input id="bid" type="number" value="0.00001000" step="0.00000001" onchange="update()"/>
+<br>
+<label for="bidNeed">Цена покупки твоя:</label>
+<input id="bidNeed" disabled/>
+<br>
+<label for="step">Шаг цены:</label>
+<input id="step" type="number" disabled value="0.00000001"/>
+<br>
+<label for="com">Комиссия:</label>
+<input id="com" disabled value="0.1%"/>
+<br>
+<label for="result">Сумма после сделки:</label>
+<input id="result" disabled/>
+<br>
+<label for="profit">Прибыль:</label>
+<input id="profit" disabled/>
+</body>
+</html>
